@@ -1,0 +1,181 @@
+@import "tailwindcss";
+
+/* Modul întunecat comandat de clasa .dark, pe lângă preferința sistemului. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * ============================================================================
+ * PALETA IMMY & EMY (§3, §69)
+ * ============================================================================
+ *
+ * Verdele din identitatea existentă a biroului, dus într-un sistem complet:
+ * un verde viu pentru acțiune, unul adânc pentru autoritate, o hârtie caldă
+ * pentru fundal. Culorile vin din mockup-ul aprobat, nu sunt reinventate.
+ *
+ * Regula respectată peste tot: nicio culoare nu are PRIMA ei definiție într-un
+ * bloc `@media` sau `[data-theme]`. Paleta clară se definește întreagă pe
+ * `:root`, iar variantele doar suprascriu.
+ */
+:root {
+  --background: #ffffff;
+  --surface: #ffffff;
+  --surface-muted: #f6faf7;
+  --foreground: #132018;
+  --muted-foreground: #54655c;
+  --border: #dfeee4;
+  --input: #cfe4d6;
+  --ring: #00b34a;
+
+  --primary: #00b34a;
+  --primary-foreground: #ffffff;
+  --primary-deep: #0a6b3a;
+  --accent: #c7e35a;
+  --accent-foreground: #14301c;
+  --tint: #e7f8ee;
+
+  --destructive: #c2352b;
+  --destructive-foreground: #ffffff;
+  --success: #0a6b3a;
+  --warning: #a86a00;
+  --info: #1d5fa8;
+
+  --radius: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #0b120e;
+    --surface: #121c16;
+    --surface-muted: #17241c;
+    --foreground: #e8f3ec;
+    --muted-foreground: #9fb4a8;
+    --border: #223429;
+    --input: #2b4034;
+    --ring: #2fd06e;
+
+    --primary: #2fd06e;
+    --primary-foreground: #04170c;
+    --primary-deep: #8ce7b1;
+    --accent: #c7e35a;
+    --accent-foreground: #14301c;
+    --tint: #142e20;
+
+    --destructive: #f0796d;
+    --destructive-foreground: #200806;
+    --success: #56d391;
+    --warning: #e2b45c;
+    --info: #7cb2ec;
+  }
+}
+
+.dark {
+  --background: #0b120e;
+  --surface: #121c16;
+  --surface-muted: #17241c;
+  --foreground: #e8f3ec;
+  --muted-foreground: #9fb4a8;
+  --border: #223429;
+  --input: #2b4034;
+  --ring: #2fd06e;
+
+  --primary: #2fd06e;
+  --primary-foreground: #04170c;
+  --primary-deep: #8ce7b1;
+  --accent: #c7e35a;
+  --accent-foreground: #14301c;
+  --tint: #142e20;
+
+  --destructive: #f0796d;
+  --destructive-foreground: #200806;
+  --success: #56d391;
+  --warning: #e2b45c;
+  --info: #7cb2ec;
+}
+
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-deep: var(--primary-deep);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-tint: var(--tint);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-serif-display);
+  --font-mono: var(--font-mono-code);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-serif), ui-serif, Georgia, serif;
+    letter-spacing: -0.015em;
+  }
+
+  /*
+   * Accesibilitate (§57): inelul de focus trebuie să rămână vizibil la
+   * navigarea cu tastatura, pe orice fundal.
+   */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  /* §57: cine a cerut mai puțină mișcare nu trebuie să primească animații. */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Ascuns vizual, dar citit de cititoarele de ecran (§57). */
+  .doar-cititor-ecran {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}
